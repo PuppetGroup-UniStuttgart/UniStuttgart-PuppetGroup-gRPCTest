@@ -1,0 +1,89 @@
+ syntax = "proto3";
+
+option java_multiple_files = true;
+option java_outer_classname = "TestOpsProto";
+option objc_class_prefix = "EC";
+
+package cloudlab.TestOpsProto;
+
+// The string service definition.
+service StringOps {
+  rpc call (StringRequest) returns (StringReply) {}
+}
+
+// The request message containing details.
+message StringRequest {
+  string name = 1;
+  string place = 2;
+}
+
+// The response message 
+message StringReply {
+  string output = 1;
+}
+
+
+// The integer service definition.
+service IntegerOps {
+  rpc call (IntegerRequest) returns (IntegerReply) {}
+}
+
+// The request message containing details.
+message IntegerRequest {
+  int32 firstNumber = 1;
+  int32 secondNumber = 2;
+}
+
+// The response message 
+message IntegerReply {
+  string output = 1;
+}
+
+
+// The float service definition.
+service FloatOps {
+  rpc call (FloatRequest) returns (FloatReply) {}
+}
+
+// The request message containing details.
+message FloatRequest {
+  float firstNumber = 1;
+  float secondNumber = 2;
+}
+
+// The response message 
+message FloatReply {
+  string output = 1;
+}
+
+
+// The double service definition.
+service DoubleOps {
+  rpc call (DoubleRequest) returns (DoubleReply) {}
+}
+
+// The request message containing details.
+message DoubleRequest {
+  double firstNumber = 1;
+  double secondNumber = 2;
+}
+
+// The response message 
+message DoubleReply {
+  string output = 1;
+}
+
+// The boolean service definition.
+service EvenOddOps {
+  rpc call (EvenOddRequest) returns (EvenOddReply) {}
+}
+
+// The request message containing details.
+message EvenOddRequest {
+  int32 number = 1;
+}
+
+// The response message 
+message EvenOddReply {
+  bool output = 1;
+}
