@@ -12,4 +12,6 @@ COPY main.proto /api/main.proto
 
 VOLUME /api
 
+EXPOSE 50053
+
 CMD java -cp /CloudLab-IAAS-UniStuttgart-Part3-gRPCTest/target/gRPCTest-0.0.1-SNAPSHOT-jar-with-dependencies.jar cloudlab.ops.TestOpsServer
