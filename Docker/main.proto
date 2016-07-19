@@ -5,96 +5,101 @@ package cloudlab.TestOpsProto;
 
 // The request message containing details.
 message StringRequest {
-  string name = 1;
-  string place = 2;
+ string name = 1;
+ string place = 2;
 }
 
-// The response message 
+// The response message
 message StringReply {
-  string output = 1;
+ string output = 1;
 }
 
-// The response message 
+// The response message
 message StringStreamReply {
-  string name = 1;
-  string place = 2;
+ string name = 1;
+ string place = 2;
 }
 
 
 // The request message containing details.
 message IntegerRequest {
-  int32 firstNumber = 1;
-  int32 secondNumber = 2;
+ int32 firstNumber = 1;
+ int32 secondNumber = 2;
 }
 
-// The response message 
+// The response message
 message IntegerReply {
-  string output = 1;
+ string output = 1;
 }
 
 
 // The request message containing details.
 message FloatRequest {
-  float firstNumber = 1;
-  float secondNumber = 2;
+ float firstNumber = 1;
+ float secondNumber = 2;
 }
 
-// The response message 
+// The response message
 message FloatReply {
-  string output = 1;
+ string output = 1;
 }
 
 
 // The request message containing details.
 message DoubleRequest {
-  double firstNumber = 1;
-  double secondNumber = 2;
+ double firstNumber = 1;
+ double secondNumber = 2;
 }
 
-// The response message 
+// The response message
 message DoubleReply {
-  string output = 1;
+ string output = 1;
 }
 
 // The request message containing details.
 message EvenOddRequest {
-  int32 number = 1;
+ int32 number = 1;
 }
 
-// The response message 
+// The response message
 message EvenOddReply {
-  bool output = 1;
+ bool output = 1;
 }
 
 // The request message containing details.
 message EnumRequest {
-  enum Status{
-     NEW = 0;
-	 SHIPPED = 1;
-	 DELIVERED = 2;
-	 CANCELLED = 3;
-  }
-  Status status = 1;
+ enum Status{
+    NEW = 0;
+SHIPPED = 1;
+DELIVERED = 2;
+CANCELLED = 3;
+ }
+ Status status = 1;
 }
 
-// The response message 
+// The response message
 message EnumReply {
-  string output = 1;
+ string output = 1;
 }
 
 message Array {
-  repeated string items = 1;
+ repeated string items = 1;
+}
+
+message MapRequest {
+ map<string, string> map = 1;
 }
 
 service Test {
-  rpc stringTest (StringRequest) returns (StringReply) {}
-  rpc integerTest (IntegerRequest) returns (IntegerReply) {}
-  rpc floatTest (FloatRequest) returns (FloatReply) {}
-  rpc doubleTest (DoubleRequest) returns (DoubleReply) {}
-  rpc boolTest (EvenOddRequest) returns (EvenOddReply) {}
-  rpc enumTest (EnumRequest) returns (EnumReply) {}
-  rpc repeatedTest (Array) returns (StringReply) {}
-  rpc ClientStream(stream StringRequest) returns (StringReply) {}
-  rpc ServerStream(StringRequest) returns (stream StringStreamReply) {}
-  rpc BidirectionalStream(stream StringRequest) returns (stream StringStreamReply) {}
+ rpc stringTest (StringRequest) returns (StringReply) {}
+ rpc integerTest (IntegerRequest) returns (IntegerReply) {}
+ rpc floatTest (FloatRequest) returns (FloatReply) {}
+ rpc doubleTest (DoubleRequest) returns (DoubleReply) {}
+ rpc boolTest (EvenOddRequest) returns (EvenOddReply) {}
+ rpc enumTest (EnumRequest) returns (EnumReply) {}
+ rpc repeatedTest (Array) returns (StringReply) {}
+ rpc mapTest (MapRequest) returns (StringReply) {}
+ rpc ClientStream(stream StringRequest) returns (StringReply) {}
+ rpc ServerStream(StringRequest) returns (stream StringStreamReply) {}
+ rpc BidirectionalStream(stream StringRequest) returns (stream StringStreamReply) {}
 }
