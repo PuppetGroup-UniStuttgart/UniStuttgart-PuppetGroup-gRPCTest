@@ -1,4 +1,4 @@
-# CloudLab-IAAS-UniStuttgart-Part3-gRPCTest
+# UniStuttgart-PuppetGroup-gRPCTest
 Java project of test gRPC that makes use of proto3 &amp; gRPC features
 
 # Run the gRPC Testing API on your own
