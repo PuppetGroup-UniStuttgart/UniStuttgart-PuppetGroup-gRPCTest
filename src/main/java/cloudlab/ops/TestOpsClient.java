@@ -74,6 +74,8 @@ public class TestOpsClient {
         });
         requestClientStream.onNext(Main.StringRequest.newBuilder().setName("Kuki").build());
         requestClientStream.onNext(Main.StringRequest.newBuilder().setPlace("Mangalore").build());
+        requestClientStream.onNext(Main.StringRequest.newBuilder().setPlace("Bangalore").build());
+        requestClientStream.onNext(Main.StringRequest.newBuilder().setPlace("Helsinki").build());
         requestClientStream.onCompleted();
         while (!finishFutureClient.isDone()) {
 
@@ -88,15 +90,10 @@ public class TestOpsClient {
 
         final SettableFuture<Void> finishFutureBidirectional = SettableFuture.create();
         StreamObserver<Main.StringRequest> requestBidirectionalStream = stub.bidirectionalStream(new StreamObserver<Main.StringStreamReply>() {
-            int index = 0;
+
             @Override
             public void onNext(Main.StringStreamReply value) {
-                if(index == 0) {
-                    System.out.println("bidirectional stream value.getName() = " + value.getName());
-                    index++;
-                } else {
-                    System.out.println("bidirectional stream value.getPlace() = " + value.getPlace());
-                }
+                System.out.println(value.getName() + "\n" + value.getPlace());
 
             }
 
@@ -108,12 +105,14 @@ public class TestOpsClient {
 
             @Override
             public void onCompleted() {
-                System.out.println("Client stream completed");
+                System.out.println("Bidirectional stream completed");
                 finishFutureBidirectional.set(null);
             }
         });
         requestBidirectionalStream.onNext(Main.StringRequest.newBuilder().setName("Kuki").build());
-        requestBidirectionalStream.onNext(Main.StringRequest.newBuilder().setPlace("Mangalore").build());
+        requestBidirectionalStream.onNext(Main.StringRequest.newBuilder().setPlace("Udupi").build());
+        requestBidirectionalStream.onNext(Main.StringRequest.newBuilder().setPlace("Stuttgart").build());
+        requestBidirectionalStream.onNext(Main.StringRequest.newBuilder().setPlace("North Pole").build());
         requestBidirectionalStream.onCompleted();
         while (!finishFutureBidirectional.isDone()) {
 
