@@ -89,10 +89,12 @@ public class TestOpsImpl implements TestGrpc.Test {
     public StreamObserver<Main.StringRequest> clientStream(final StreamObserver<Main.StringReply> responseObserver) {
         return new StreamObserver<Main.StringRequest>() {
             Main.StringRequest completeRequest = Main.StringRequest.newBuilder().build();
+            List<String> placesList = new ArrayList<String>();
 
             @Override
             public void onNext(Main.StringRequest value) {
                 completeRequest = Main.StringRequest.newBuilder(value).mergeFrom(completeRequest).build();
+                placesList.add(value.getPlace());
             }
 
             @Override
@@ -102,7 +104,13 @@ public class TestOpsImpl implements TestGrpc.Test {
 
             @Override
             public void onCompleted() {
-                Main.StringReply reply = Main.StringReply.newBuilder().setOutput("Hi " + completeRequest.getName() + ". You're from " + completeRequest.getPlace()).build();
+                StringBuilder places = new StringBuilder();
+                for (String place : placesList) {
+                    if (!place.equals(""))
+                        places.append(place).append(",");
+                }
+                places.deleteCharAt(places.length() - 1);
+                Main.StringReply reply = Main.StringReply.newBuilder().setOutput("Hi " + completeRequest.getName() + ". You're from " + places.toString()).build();
                 responseObserver.onNext(reply);
                 responseObserver.onCompleted();
             }
@@ -120,10 +128,12 @@ public class TestOpsImpl implements TestGrpc.Test {
     public StreamObserver<Main.StringRequest> bidirectionalStream(final StreamObserver<Main.StringStreamReply> responseObserver) {
         return new StreamObserver<Main.StringRequest>() {
             Main.StringRequest completeRequest = Main.StringRequest.newBuilder().build();
+            List<String> placesList = new ArrayList<String>();
 
             @Override
             public void onNext(Main.StringRequest value) {
                 completeRequest = Main.StringRequest.newBuilder(value).mergeFrom(completeRequest).build();
+                placesList.add(value.getPlace());
             }
 
             @Override
@@ -133,10 +143,13 @@ public class TestOpsImpl implements TestGrpc.Test {
 
             @Override
             public void onCompleted() {
-                Main.StringStreamReply nameReply = Main.StringStreamReply.newBuilder().setName(completeRequest.getName()).build();
-                Main.StringStreamReply placeReply = Main.StringStreamReply.newBuilder().setPlace(completeRequest.getPlace()).build();
+                Main.StringStreamReply nameReply = Main.StringStreamReply.newBuilder().setName("Hi " + completeRequest.getName() + ". You are from the following places:").build();
                 responseObserver.onNext(nameReply);
-                responseObserver.onNext(placeReply);
+
+                for (String place : placesList) {
+                    if (!place.equals(""))
+                        responseObserver.onNext(Main.StringStreamReply.newBuilder().setPlace(place).build());
+                }
                 responseObserver.onCompleted();
             }
         };
